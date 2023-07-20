@@ -18,4 +18,9 @@ process.on('unhandledRejection',(error)=>{
         console.error('shutting down server...');
         process.exit(1);
     }
-})
+});
+
+process.on('SIGTERM',(error)=>{
+    console.log(`server closed ${error}`);
+    process.exit(1);
+});

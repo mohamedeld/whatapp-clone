@@ -1,4 +1,6 @@
 const app = require("./app");
+const mongoose = require("mongoose");
+
 const dotenv = require('dotenv');
 process.on('uncaughtException',()=>{
     console.log('uncaughtException');
@@ -8,9 +10,17 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 
 dotenv.config();
-app.listen(PORT,()=>{
-    console.log(`server is listening on port ${PORT}`);
-})
+mongoose.connect(process.env.DATABASE_URL,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    family:4
+}).then(()=> {
+    console.log('connected to database successfully');
+    app.listen(PORT,()=>{
+        console.log(`server is listening on port ${PORT}`);
+    })
+}).catch(err=> console.error(err))
+
 
 process.on('unhandledRejection',(error)=>{
     console.log(`unhandledRejection ${unhandledRejection}`);

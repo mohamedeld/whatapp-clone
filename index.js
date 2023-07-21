@@ -21,6 +21,14 @@ mongoose.connect(process.env.DATABASE_URL,{
     })
 }).catch(err=> console.error(err))
 
+mongoose.connection.on('error',(err)=>{
+    console.error(`Mongodb connection error: ${err}`);
+    process.exit(1);
+})
+
+if(process.env.NODE_ENV !== 'production'){
+    mongoose.set('debug',true);
+}
 
 process.on('unhandledRejection',(error)=>{
     console.log(`unhandledRejection ${unhandledRejection}`);

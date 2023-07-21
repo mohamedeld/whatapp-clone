@@ -35,7 +35,7 @@ exports.login = catchAsync(async (request,response,next)=>{
         return next(new AppError('incorrect email',401));
     }
     const correctPassword = await bcrypt.compare(request.body.password,user.password);
-    if(!correctPasword){
+    if(!correctPassword){
         return next(new AppError('incorrect password',400))
     }
     const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY,{expiresIn:process.env.JWT_EXPIRES_IN});
